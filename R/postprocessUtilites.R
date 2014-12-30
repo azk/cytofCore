@@ -164,11 +164,11 @@ cytofCore.concatenateFiles = function(fcsFiles,timeCol="Time"){
 	return(outputFileName)
 }
 
-cytofCore.updatePanel = function(){
-  library("tcltk")
+cytofCore.updatePanel = function(template.file,fcs.dir){
+  # library("tcltk")
   #select template file, which has list of metals you want to include and their desired marker names
   Filters <- matrix(c("template", ".txt","template", ".TXT", "template",".fcs","template",".FCS","template",".csv","template","CSV"), 6, 2, byrow = TRUE)
-  templateFile<- tk_choose.files(caption="Select template file", multi=FALSE, filters=Filters)
+  templateFile<- template.file#tk_choose.files(caption="Select template file", multi=FALSE, filters=Filters)
   templateExt=substr(templateFile,nchar(templateFile)-2,nchar(templateFile))
   
   #read in metal and marker list from template file
@@ -195,7 +195,7 @@ cytofCore.updatePanel = function(){
   }
   
   #select folder of FCS files to relabel
-  fcsFolder<-tk_choose.dir()
+  fcsFolder<-fcs.dir #tk_choose.dir()
   newFolder<-file.path(fcsFolder,"relabeled")
   dir.create(newFolder)
   fcsFiles<-list.files(path=fcsFolder, pattern=".fcs$")
